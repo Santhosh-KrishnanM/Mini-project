@@ -105,6 +105,56 @@ public class SQLTools {
         }
         return result.toString().trim(); // Removing any trailing spaces
     }
+    public String FindBus(String source){
+        String query = "SELECT Bus_id, Source, Destination, Time_Available, Date_Available FROM bus WHERE Source = ? AND Seats_Available != 0;";        StringBuilder result = new StringBuilder();
+
+        try  {
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setString(1, source);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                result.append(rs.getInt("Bus_id")).append(" ");
+                result.append(rs.getString("Source")).append(" ");
+                result.append(rs.getString("Destination")).append(" ");
+                result.append(rs.getString("Time_Available")).append(" ");
+                result.append(rs.getDate("Date_Available")).append(" ");
+                result.append("\n");
+            }
+
+        } catch (SQLException e) {
+            System.err.println("SQL error: " + e.getMessage());
+            return null;
+        }
+        JOptionPane.showMessageDialog(null,"Select your bus");
+        return result.toString().trim();
+    }
+    public boolean BusBookingIn(String input){
+        String query = "INSERT INTO bookings (MobNo, UserName, BusId, Source, Destination, SeatNo) VALUES (?, ?, ?, ?, ?, ?);";
+        String updateQuery = "UPDATE bus SET Seats_Available = Seats_Available - 1 WHERE BusId = ? AND Seats_Available > 0;";
+
+        try (PreparedStatement ps = con.prepareStatement(query)) {
+            PreparedStatement updatePs = con.prepareStatement(updateQuery);
+            String[] values = input.split(" ");
+            updatePs.setInt(1, Integer.parseInt(values[2]));
+            ps.setString(1, values[0]); // MobNo
+            ps.setString(2, values[1]); // UserName
+            ps.setInt(3, Integer.parseInt(values[2])); // BusId
+            ps.setString(4, values[3]); // Source
+            ps.setString(5, values[4]); // Destination
+            ps.setInt(6, Integer.parseInt(values[5])); // SeatNo
+
+            System.out.println(ps); // Printing the prepared statement for debugging
+            ps.executeUpdate();
+
+            JOptionPane.showMessageDialog(null, "Inserted");
+
+
+        } catch (SQLException | NumberFormatException e) {
+            System.err.println("SQL error: " + e.getMessage());
+            return false;
+        }
+        return true;
+    }
 
 
 }
