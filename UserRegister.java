@@ -1,151 +1,186 @@
-package BusBooking;
+package Miniproject;
 
-import javax.swing.*;
-import java.awt.*;
-//import javax.swing.border.Border;
+import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import java.awt.Font;
+import javax.swing.JTextField;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.border.LineBorder;
+import javax.swing.JTextArea;
+import javax.swing.JRadioButton;
+import java.awt.Toolkit;
+import javax.swing.JButton;
+import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.sql.*;
 
-class UserRegister {
-    public static void main(String[] args) {
-        JFrame f = new JFrame("Sign Up");
-        f.setSize(800, 700);
-        f.setLayout(new GridLayout(3, 1));
-        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        
-        // Header Panel
-        JPanel head = new JPanel();
-        head.setBounds(50, 50, 300, 150); 
-        head.setLayout(null);
-        JLabel h = new JLabel("USER SIGN UP");
-        h.setBounds(550, 130, 300, 100);  // Centered horizontally at the top
-        h.setFont(new Font("Times New Roman", Font.PLAIN, 20));
-        h.setForeground(Color.red);
-        head.add(h);
-        f.add(head);
-        
-        // Personal Details Panel
-        JPanel p1 = new JPanel();
-        p1.setLayout(null);
-        p1.setBorder(BorderFactory.createTitledBorder("Personal Details"));
-        p1.setPreferredSize(new Dimension(800, 600)); 
-        JLabel name = new JLabel("Student Name:");
-        name.setBounds(550, 10, 150, 30);
-        name.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        p1.add(name);
-        JTextField n = new JTextField(25);
-        n.setBounds(650, 10, 200, 30);
-        p1.add(n);
-        
-        JLabel dob = new JLabel("Date of Birth:");
-        dob.setBounds(550, 50, 150, 30);
-        dob.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        p1.add(dob);
-        JTextField d = new JTextField(15);
-        d.setBounds(650, 50, 200, 30);
-        p1.add(d);
-        
-        JLabel age = new JLabel("Age:");
-        age.setBounds(550, 90, 150, 30);
-        age.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        p1.add(age);
-        JTextField a = new JTextField(5);
-        a.setBounds(650, 90, 200, 30);
-        p1.add(a);
-        
-        JLabel gen = new JLabel("Gender:");
-        gen.setBounds(550, 130, 150, 30);
-        gen.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        p1.add(gen);
-        
-        JRadioButton jb1 = new JRadioButton("Male");
-        jb1.setFont(new Font("Garamond", Font.BOLD,16));
-        JRadioButton jb2 = new JRadioButton("Female");
-        jb2.setFont(new Font("Garamond", Font.BOLD,16));
-        ButtonGroup jbg = new ButtonGroup();
-        jbg.add(jb1);
-        jbg.add(jb2);
-        
-        JPanel genderp = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        genderp.setBounds(650, 130, 200, 30);
-        genderp.add(jb1);
-        genderp.add(jb2);
-        p1.add(genderp);
-        
-        JLabel father = new JLabel("Father Name:");
-        father.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        father.setBounds(550, 170, 150, 30);
-        p1.add(father);
-        JTextField fat = new JTextField(25);
-        fat.setBounds(650, 170, 200, 30);
-        p1.add(fat);
-        
-        JLabel mother = new JLabel("Mother Name:");
-        mother.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        mother.setBounds(550, 210, 150, 30);
-        p1.add(mother);
-        JTextField mo = new JTextField(25);
-        mo.setBounds(650, 210, 150, 30);
-        p1.add(mo);
-        f.add(p1);
-        
-        // Academic Details Panel
-        JPanel p2 = new JPanel();
-        p2.setLayout(null);
-        p2.setBorder(BorderFactory.createTitledBorder("Academic Details"));
-        JTextField dpt, cgpa;
-        JLabel dept = new JLabel("Department: ");
-        dept.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        dept.setBounds(550, 10, 150, 30);
-        //dept.setBorder(BorderFactory.createLineBorder(Color.ORANGE));
-        p2.add(dept);
-        dpt = new JTextField(10);
-        dpt.setBounds(650, 10, 200, 30);
-        p2.add(dpt);
-        
-        JLabel yearLabel = new JLabel("Year: ");
-        yearLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        yearLabel.setBounds(550, 50, 150, 30);
-        p2.add(yearLabel);
-        String[] str = {"I", "II", "III", "IV"};
-        JComboBox<String> cb1 = new JComboBox<>(str);
-        cb1.setBounds(650, 50, 200, 30);
-        p2.add(cb1);
-        
-        JLabel semesterLabel = new JLabel("Semester: ");
-        semesterLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        semesterLabel.setBounds(550, 90, 150, 30);
-        p2.add(semesterLabel);
-        String[] sem = {"I", "II", "III", "IV", "V", "VI", "VII", "VIII"};
-        JComboBox<String> cb2 = new JComboBox<>(sem);
-        cb2.setBounds(650, 90, 200, 30);
-        p2.add(cb2);
-        
-        JLabel cgpaLabel = new JLabel("CGPA: ");
-        cgpaLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        cgpaLabel.setBounds(550, 130, 150, 30);
-        p2.add(cgpaLabel);
-        cgpa = new JTextField(10);
-        cgpa.setBounds(650, 130, 200, 30);
-        p2.add(cgpa);
-        
-        JLabel quota = new JLabel("Quota: ");
-        quota.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-        quota.setBounds(550, 170, 150, 30);
-        p2.add(quota);
-        
-        JCheckBox mq = new JCheckBox("MQ");
-        mq.setFont(new Font("Garamond", Font.PLAIN, 15));
-        mq.setBounds(650, 170, 50, 30);
-        p2.add(mq);
-        
-        JCheckBox gq = new JCheckBox("GQ");
-        gq.setFont(new Font("Garamond", Font.PLAIN, 15));
-        gq.setBounds(700, 170, 100, 30);
-        p2.add(gq);
-        
-        f.add(p2);
-        
-        // Set frame properties
-        f.setLocationRelativeTo(null);
-        f.setVisible(true);
-    }
+
+public class UserRegister {
+
+	private JFrame frmSignUp;
+	private JTextField txtname;
+	private JTextField txtmob;
+	private JTextField txtemail;
+	private JTextField txtage;
+	private final ButtonGroup buttonGroup = new ButtonGroup();
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserRegister window = new UserRegister();
+					window.frmSignUp.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public UserRegister() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frmSignUp = new JFrame();
+		frmSignUp.setTitle("Sign Up");
+		frmSignUp.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\selva\\Downloads\\Related Wallpapers - Register Icon Png White Png Image With Transparent Background.jpg"));
+		frmSignUp.getContentPane().setBackground(new Color(100, 149, 237));
+		frmSignUp.setBounds(100, 100, 613, 532);
+		frmSignUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frmSignUp.getContentPane().setLayout(null);
+		
+		JLabel lblNewLabel = new JLabel("Sign Up");
+		lblNewLabel.setFont(new Font("Times New Roman", Font.PLAIN, 24));
+		lblNewLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel.setBounds(0, 0, 586, 35);
+		frmSignUp.getContentPane().add(lblNewLabel);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 255));
+		panel.setBorder(new LineBorder(new Color(0, 0, 0), 1, true));
+		panel.setBounds(10, 35, 381, 450);
+		frmSignUp.getContentPane().add(panel);
+		panel.setLayout(null);
+		
+		JLabel name = new JLabel("Name");
+		name.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		name.setBounds(30, 30, 74, 24);
+		panel.add(name);
+		
+		JLabel mob = new JLabel("Mobile No.");
+		mob.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		mob.setBounds(30, 92, 74, 24);
+		panel.add(mob);
+		
+		JLabel email = new JLabel("Email");
+		email.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		email.setBounds(30, 154, 74, 24);
+		panel.add(email);
+		
+		JLabel gender = new JLabel("Gender");
+		gender.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		gender.setBounds(30, 223, 74, 24);
+		panel.add(gender);
+		
+		JLabel age = new JLabel("Age");
+		age.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		age.setBounds(30, 279, 74, 24);
+		panel.add(age);
+		
+		JLabel address = new JLabel("Address");
+		address.setFont(new Font("Times New Roman", Font.BOLD, 13));
+		address.setBounds(30, 340, 74, 24);
+		panel.add(address);
+		
+		txtname = new JTextField();
+		txtname.setBounds(145, 33, 159, 19);
+		panel.add(txtname);
+		txtname.setColumns(10);
+		
+		txtmob = new JTextField();
+		txtmob.setColumns(10);
+		txtmob.setBounds(145, 95, 159, 19);
+		panel.add(txtmob);
+		
+		txtemail = new JTextField();
+		txtemail.setColumns(10);
+		txtemail.setBounds(145, 157, 159, 19);
+		panel.add(txtemail);
+		
+		txtage = new JTextField();
+		txtage.setColumns(10);
+		txtage.setBounds(145, 282, 159, 19);
+		panel.add(txtage);
+		
+		JTextArea txtadd = new JTextArea();
+		txtadd.setFont(new Font("Times New Roman", Font.PLAIN, 13));
+		txtadd.setBounds(145, 340, 159, 73);
+		panel.add(txtadd);
+		
+		JRadioButton rbmale = new JRadioButton("Male");
+		rbmale.setBackground(new Color(255, 255, 255));
+		rbmale.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		buttonGroup.add(rbmale);
+		rbmale.setBounds(144, 225, 68, 21);
+		panel.add(rbmale);
+		
+		JRadioButton rbfemale = new JRadioButton("Female");
+		rbfemale.setBackground(new Color(255, 255, 255));
+		rbfemale.setFont(new Font("Times New Roman", Font.PLAIN, 11));
+		buttonGroup.add(rbfemale);
+		rbfemale.setBounds(230, 225, 74, 21);
+		panel.add(rbfemale);
+		
+		JButton btnNewButton = new JButton("Submit");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					Class.forName("com.mysql.cj.jdbc.Driver");
+                    Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/miniproject", "root", "Kishore@2011");
+                    String query = "insert into register values(?,?,?,?,?,?)";
+                    PreparedStatement ps = con.prepareStatement(query);
+                    ps.setString(1,txtname.getText());
+                    ps.setString(2,txtmob.getText());
+                    ps.setString(3,txtemail.getText());
+                    if(rbmale.isSelected())
+                    	ps.setString(4,rbmale.getText());
+                    else
+                    	ps.setString(4,rbfemale.getText());
+                    ps.setInt(5,Integer.parseInt(txtage.getText()));  
+                    ps.setString(6, txtadd.getText());
+                    int i = ps.executeUpdate();
+                    JOptionPane.showMessageDialog(btnNewButton, i+" Signed up successfully");
+                    ps.close();
+                    con.close();
+				}
+				catch (Exception e1) {
+					e1.printStackTrace();
+				}
+			}
+		});
+		btnNewButton.setFont(new Font("Times New Roman", Font.BOLD, 12));
+		btnNewButton.setBounds(145, 423, 85, 21);
+		panel.add(btnNewButton);
+		frmSignUp.setVisible(true);
+	}
+
+	public void setVisible(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
 }
