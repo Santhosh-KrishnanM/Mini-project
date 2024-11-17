@@ -155,6 +155,28 @@ public class SQLTools {
         }
         return true;
     }
+    public String getHistory(String mobNo) {
+        StringBuffer result=new StringBuffer();
+        try {
+            String query = "SELECT * FROM BusBooking WHERE MobNo = ?;";
+            PreparedStatement ps = con.prepareStatement(query);
+           
+            ps.setInt(1, Integer.parseInt(mobNo));
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                result.append(rs.getString("MobNo")).append(" ");
+                result.append(rs.getString("UserName")).append(" ");
+                result.append(rs.getInt("BusId")).append(" ");
+                result.append(rs.getString("Source")).append(" ");
+                result.append(rs.getString("Destination")).append(" ");
+                result.append(rs.getString("SeatNo")).append(" ").append("\n");
+            }
+        } catch (SQLException e) {
+            System.err.println("SQL error: " + e.getMessage());
+            return null;
+        }
+        return result.toString().trim();
+    }
 
 
 }
