@@ -58,9 +58,9 @@ public class UserRegister {
 	private void initialize() {
 		frmSignUp = new JFrame();
 		frmSignUp.setTitle("Sign Up");
-		frmSignUp.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\selva\\Downloads\\Related Wallpapers - Register Icon Png White Png Image With Transparent Background.jpg"));
+		frmSignUp.setIconImage(Toolkit.getDefaultToolkit().getImage("C:\\Users\\selva\\Downloads\\Related Wallpapers - user Icon Png White Png Image With Transparent Background.jpg"));
 		frmSignUp.getContentPane().setBackground(new Color(100, 149, 237));
-		frmSignUp.setBounds(100, 100, 613, 532);
+		frmSignUp.setBounds(100, 100, 554, 587);
 		frmSignUp.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frmSignUp.getContentPane().setLayout(null);
 		
@@ -145,14 +145,16 @@ public class UserRegister {
 		buttonGroup.add(rbfemale);
 		rbfemale.setBounds(230, 225, 74, 21);
 		panel.add(rbfemale);
-		
+		 
+		String email1 = txtemail.getText();
+    	String mob1 = txtmob.getText();
 		JButton btnNewButton = new JButton("Submit");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					Class.forName("com.mysql.cj.jdbc.Driver");
                     Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/miniproject", "root", "Kishore@2011");
-                    String query = "insert into register values(?,?,?,?,?,?)";
+                    String query = "insert into user values(?,?,?,?,?,?,?)";
                     PreparedStatement ps = con.prepareStatement(query);
                     ps.setString(1,txtname.getText());
                     ps.setString(2,txtmob.getText());
@@ -163,10 +165,14 @@ public class UserRegister {
                     	ps.setString(4,rbfemale.getText());
                     ps.setInt(5,Integer.parseInt(txtage.getText()));  
                     ps.setString(6, txtadd.getText());
+                    ps.setDouble(7,	0.0);
                     int i = ps.executeUpdate();
                     JOptionPane.showMessageDialog(btnNewButton, i+" Signed up successfully");
                     ps.close();
                     con.close();
+                    userHome1 uh = new userHome1(email1,mob1);
+                    uh.setVisible(true);
+                    setVisible(false);
 				}
 				catch (Exception e1) {
 					e1.printStackTrace();
